@@ -7,3 +7,4 @@ python-multipart
 pydantic
 pydantic[email]
 python-dotenv
+httpx==0.28.1
