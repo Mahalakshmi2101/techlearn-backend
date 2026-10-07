@@ -2,3 +2,8 @@
 __pycache__/ 
 "*.db" 
 venv/ 
+"*.db" 
+.env
+*.db
+__pycache__/
+*.pyc
