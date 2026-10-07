@@ -2,18 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 import models
-from routers import auth, courses, progress, quiz, ai
+from routers import auth, courses, progress, quiz
 from dotenv import load_dotenv
 load_dotenv()
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="TechLearn API", version="1.0.0")
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://techlearn.vercel.app"  # your actual Vercel URL
+        "https://techlearn-frontend-five.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
