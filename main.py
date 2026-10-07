@@ -26,7 +26,6 @@ app.include_router(auth.router)
 app.include_router(courses.router)
 app.include_router(progress.router)
 app.include_router(quiz.router)
-app.include_router(ai.router)
 
 @app.get("/")
 def root():
