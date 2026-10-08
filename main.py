@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+=from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 import models
@@ -8,8 +8,6 @@ load_dotenv()
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="TechLearn API", version="1.0.0")
-
-from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,9 +19,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/seed-db-now")
+def seed_database():
+    import sys
+    import os
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from data.seed import seed
+    seed()
+    return {"status": "seeded"}
 
 app.include_router(auth.router)
 app.include_router(courses.router)
