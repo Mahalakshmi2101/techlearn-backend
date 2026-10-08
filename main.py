@@ -4,7 +4,7 @@ from database import engine
 import models
 from routers import auth, courses, progress, quiz
 from dotenv import load_dotenv
-from seed import seed
+from data.seed import seed
 load_dotenv()
 models.Base.metadata.create_all(bind=engine)
 
