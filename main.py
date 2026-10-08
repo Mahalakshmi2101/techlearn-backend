@@ -4,6 +4,7 @@ from database import engine
 import models
 from routers import auth, courses, progress, quiz
 from dotenv import load_dotenv
+from seed import seed
 load_dotenv()
 models.Base.metadata.create_all(bind=engine)
 
@@ -41,3 +42,12 @@ app.include_router(quiz.router)
 @app.get("/")
 def root():
     return {"message": "TechLearn API running"}
+
+
+@app.get("/seed-db-now")
+def seed_db():
+    try:
+        seed()
+        return {"status": "seeded"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
