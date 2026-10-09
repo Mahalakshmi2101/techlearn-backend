@@ -1,10 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 import models
 from routers import auth, courses, progress, quiz
 from dotenv import load_dotenv
-from data.seed import seed
+
 load_dotenv()
 models.Base.metadata.create_all(bind=engine)
 
@@ -26,13 +26,13 @@ def health():
     return {"status": "ok"}
 
 @app.get("/seed-db-now")
-def seed_database():
-    import sys
-    import os
-    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-    from data.seed import seed
-    seed()
-    return {"status": "seeded"}
+def seed_db():
+    try:
+        from data.seed import seed
+        seed()
+        return {"status": "seeded"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 app.include_router(auth.router)
 app.include_router(courses.router)
@@ -42,12 +42,3 @@ app.include_router(quiz.router)
 @app.get("/")
 def root():
     return {"message": "TechLearn API running"}
-
-
-@app.get("/seed-db-now")
-def seed_db():
-    try:
-        seed()
-        return {"status": "seeded"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
