@@ -4,9 +4,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from database import SessionLocal, engine
 import models
-from passlib.context import CryptContext
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
+# Pre-hashed value of "password123" — avoids bcrypt version conflicts at seed time
+HASHED_PASSWORD = "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW"
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -165,8 +165,9 @@ def seed():
     test_user = models.User(
         username="Bob",
         email="bob@techlearn.com",
-        hashed_password=pwd_context.hash("password123")
+        hashed_password=HASHED_PASSWORD
     )
+    
     db.add(test_user)
     db.commit()
 
