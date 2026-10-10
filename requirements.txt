@@ -6,6 +6,7 @@ bcrypt
 python-multipart
 pydantic
 pydantic[email]
+email-validator
 python-dotenv
 httpx==0.28.1
 psycopg2-binary

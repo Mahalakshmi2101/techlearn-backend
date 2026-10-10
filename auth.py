@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 from typing import Optional
 from passlib.context import CryptContext
@@ -8,7 +9,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 import models, schemas
 
-SECRET_KEY = "techlearn_secret_key_change_in_production"
+SECRET_KEY = os.environ.get("SECRET_KEY", "techlearn_secret_key_change_in_production")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 

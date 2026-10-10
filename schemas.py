@@ -79,12 +79,18 @@ class CourseDetailOut(CourseOut):
 
 
 # Progress
+class LessonCompletionOut(BaseModel):
+    lesson_id: int
+    class Config:
+        from_attributes = True
+
 class ProgressOut(BaseModel):
     course_id: int
     completed_lessons: int
     total_lessons: int
     percentage: float
     is_completed: bool
+    lesson_completions: List[LessonCompletionOut] = []
     class Config:
         from_attributes = True
 
