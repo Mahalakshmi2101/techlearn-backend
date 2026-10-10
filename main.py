@@ -26,15 +26,6 @@ app.add_middleware(
 def health():
     return {"status": "ok"}
 
-@app.get("/seed-db-now-xk9q2m")
-def seed_db():
-    try:
-        from data.seed import seed
-        seed()
-        return {"status": "seeded"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
 app.include_router(auth.router)
 app.include_router(courses.router)
 app.include_router(progress.router)
