@@ -6,7 +6,7 @@ from database import SessionLocal, engine
 import models
 from passlib.context import CryptContext
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
 
 models.Base.metadata.create_all(bind=engine)
 
